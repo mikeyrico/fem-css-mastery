@@ -143,3 +143,79 @@ input:in-range { background-color:lightgreen;}
  li:nth-of-type(3):nth-last-of-type(2),
  li:nth-of-type(4):nth-last-of-type(1){width: 25%;}
 ```
+
+### more structural selector
+* `:root` - selects the `html` tag in an html document
+* `:empty` - selects self closing (`img`, `input`), but also elements with no content
+* `:blank` - have only blank spaces - would be good for cms systems to remove mistaken
+
+## Negation pseudo class (`:not`)
+```css
+E:not(<simple_selector>)
+
+div:not(.excludeMe)
+```
+* simple selectors only (NO complex ones)
+* simple selector means no no spaces or combinators
+> note that many structrual selectors can be chained, and its still a `simple` selector
+
+* may also support lists (as of the lesson, was supported in Safari only)
+```css
+div:not(s1, s2, s3, ...)
+// real example
+div:not(.excuseMe, .excuseYou)
+div:not(.excuseMe):not(.excuseYou) // same as above
+```
+
+## Newer pseudo classes
+* `:matches` (safari only)
+> check support
+
+```css
+// this `matches` selector
+:matches(#home, #contact) aside :matches(a:active, a:focus){}
+
+// is the same as these 4 selectors
+#home aside a:active,
+#contact aside a:active,
+#home aside a:focus,
+#contact aside a:focus {}
+```
+
+## Parent selector `:has`
+* check support -- see [can i use](caniuse.com)
+
+```css
+header:has(h1, h2, h3, h4, h5, h6) // contains a header
+
+header:not(:has(h1, h2, h3, h4, h5, h6)) // contains no header
+
+header:has(:not(h1, h2, h3, h4, h5, h6)) // contains something that is not a header
+```
+
+> check out the data list html element, which is an input with a predefined set
+> of data options
+
+## Language pseudo classes
+* we could already target html tags with lang: `html[lang|="en"]`
+* `p:lang(en)` this selector basically checks if the element is in english **without**
+the attribute having to be defined (is this the natural language at this point in time)
+* like `sp-us` vs `en-uk` vs `en-us` -- could match all those
+
+* also `:dir(ltr|rtl)` to select language direction
+
+## Link Pseudo Classes
+* `:link` + `:visited`
+* `:any-link` same as `link` and `visited` pseudo classes combined
+> `:matches(:link, :visited)
+
+## User Action Pseudo Classes
+* `:hover` `:active` `:focus`
+* these can select any element on the page, not only links, also good for buttons
+> Always style `:focus` when you style `:hover`
+* `:focus-ring` `:focus-within`
+* `:drop` `:drop()`
+> never remove outline from a focused element: `*:focus { outline: none; }`
+
+* see this list of [elements that can be
+  active](https://html.spec.whatwg.org/multipage/semantics-other.html#selector-active)
